@@ -1,0 +1,15 @@
+{
+  "name": "proxy_server",
+  "version": "1.0.0",
+  "description": "Prework for NodeJs course",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Thanh Le",
+  "license": "ISC",
+  "dependencies": {
+    "request": "^2.75.0",
+    "yargs": "^3.32.0"
+  }
+}
