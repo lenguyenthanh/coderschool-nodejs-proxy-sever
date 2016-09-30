@@ -1,7 +1,7 @@
 const http = require('http')
+const https = require('https')
 const request = require('request')
 const argv = require('yargs')
-                .usage('Usage: node $0 [options]')
 				.alias('h','host').describe('h', 'The host of the destination server.')
 				.alias('p','port').describe('p', 'The port of the destination server.')
 				.alias('u','url').describe('u', 'A single url that overrides the host and port.')
@@ -9,6 +9,7 @@ const argv = require('yargs')
 				.alias('l','loglevel').describe('l', 'Specify the level of logger.')
 				.help('h')
                 .alias('h', 'help')
+                .usage('Usage: node $0 [options]')
     			.example('node index.js -h=127.0.0.1 -p 8000')
 				.argv
 
@@ -31,6 +32,11 @@ if(logFile) {
     winston.remove(winston.transports.Console)
 }
 
+const options = {
+    key: fs.readFileSync('key.pem'),
+  	cert: fs.readFileSync('cert.pem')
+}
+
 const echoServer = http.createServer((req, res) => {
     winston.debug('Echo Server\n')
     winston.debug('Request Headers: ' + JSON.stringify(req.headers) + '\n')
@@ -43,7 +49,7 @@ const echoServer = http.createServer((req, res) => {
 echoServer.listen(8000)
 winston.info('Echo Server listening @ 127.0.0.1:8000\n')
 
-const proxyServer = http.createServer((req, res) => {
+const proxyServer = https.createServer(options, (req, res) => {
     winston.debug('Proxy Server\n')
 
     let url = getDestinationUrl(req.headers[DESTINATION_HEADER])
