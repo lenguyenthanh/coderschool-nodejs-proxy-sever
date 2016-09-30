@@ -1,6 +1,17 @@
 const http = require('http')
 const request = require('request')
-const argv = require('yargs').argv
+const argv = require('yargs')
+                .usage('Usage: node $0 [options]')
+				.alias('h','host').describe('h', 'The host of the destination server.')
+				.alias('p','port').describe('p', 'The port of the destination server.')
+				.alias('u','url').describe('u', 'A single url that overrides the host and port.')
+				.alias('f','logfile').describe('f', 'Specify a file path to redirect loggin to.')
+				.alias('l','loglevel').describe('l', 'Specify the level of logger.')
+				.help('h')
+                .alias('h', 'help')
+    			.example('node index.js -h=127.0.0.1 -p 8000')
+				.argv
+
 const fs = require('fs')
 const winston = require('winston')
 
