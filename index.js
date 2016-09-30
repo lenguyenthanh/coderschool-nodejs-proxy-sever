@@ -2,6 +2,7 @@ const http = require('http')
 const request = require('request')
 const argv = require('yargs').argv
 const fs = require('fs')
+const winston = require('winston')
 
 const DESTINATION_HEADER = 'x-destination-url'
 const localhost = '127.0.0.1'
@@ -12,11 +13,16 @@ const port = argv.port || (host === localhost ? 8000 : 80)
 const hostPortUrl = scheme + host + ':' + port
 const destinationUrl = argv.url || hostPortUrl
 
-const logStream = argv.logfile ? fs.createWriteStream(argv.logfile) : process.stdout
+winston.level = argv.loglevel || 'debug'
+const logFile = argv.logfile
+if(logFile) {
+    winston.add(winston.transports.File, { filename: logFile })
+    winston.remove(winston.transports.Console)
+}
 
 const echoServer = http.createServer((req, res) => {
-    logStream.write('Echo Server\n')
-    logStream.write('Request Headers: ' + JSON.stringify(req.headers) + '\n')
+    winston.debug('Echo Server\n')
+    winston.debug('Request Headers: ' + JSON.stringify(req.headers) + '\n')
     for( let header in req.headers) {
         res.setHeader(header, req.headers[header])
     }
@@ -24,10 +30,10 @@ const echoServer = http.createServer((req, res) => {
 })
 
 echoServer.listen(8000)
-logStream.write('Echo Server listening @ 127.0.0.1:8000\n')
+winston.info('Echo Server listening @ 127.0.0.1:8000\n')
 
 const proxyServer = http.createServer((req, res) => {
-    logStream.write('Proxy Server\n')
+    winston.debug('Proxy Server\n')
 
     let url = getDestinationUrl(req.headers[DESTINATION_HEADER])
     const options = {
@@ -49,4 +55,4 @@ const getDestinationUrl = (headerUrl) => {
 }
 
 proxyServer.listen(9000)
-logStream.write('Proxy Server listening @ 127.0.0.1:9000\n')
+winston.info('Proxy Server listening @ 127.0.0.1:9000\n')

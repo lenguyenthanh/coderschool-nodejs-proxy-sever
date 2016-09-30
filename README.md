@@ -12,7 +12,7 @@ Completed:
 * [x] Required: Client requests and respones are printed to stdout
 * [x] Required: The `--logfile` argument outputs all logs to the file specified instead of stdout
 * [] Optional: The `--exec` argument proxies stdin/stdout to/from the destination program
-* [] Optional: The `--loglevel` argument sets the logging chattiness
+* [x] Optional: The `--loglevel` argument sets the logging chattiness
 * [] Optional: Supports HTTPS
 * [] Optional: `-h` argument prints CLI API
 
@@ -110,6 +110,10 @@ A single url that overrides the above. E.g., `google.com`
 ##### `--logfile`
 
 Specify a file path to redirect logging to. Eg `log.txt`
+
+##### `--loglevel`
+
+Sepcify the level of loggger. Eg `debug`
 
 #### Headers
 
