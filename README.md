@@ -89,7 +89,23 @@ curl http://127.0.0.1:9000/ -d 'Hello Proxy' -H 'foo:bar' -v
 Hello Proxy
 ```
 
+
 ### Configuration:
+
+```
+node index.js -h
+Usage: node index.js [options]
+
+Options:
+  -h, --host, --help  Show help                                        [boolean]
+  -p, --port          The port of the destination server.
+  -u, --url           A single url that overrides the host and port.
+  -f, --logfile       Specify a file path to redirect loggin to.
+  -l, --loglevel      Specify the level of logger.
+
+Examples:
+  node index.js -h=127.0.0.1 -p 8000
+```
 
 #### CLI Arguments:
 
