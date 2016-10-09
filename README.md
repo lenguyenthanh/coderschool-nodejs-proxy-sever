@@ -1,7 +1,7 @@
 # coderschool-nodejs-proxy-sever
 This is Prework for [Coderschool](http://www.coderschool.vn) NodeJs Course  on Tuesday, October 18
 
-Time spent: [1 hour]
+Time spent: [3 hour]
 
 Completed:
 
